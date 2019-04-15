@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './theme/theme.dart';
 import './routes/MainRoutes.dart';
 import './screens/Dashboard.dart';
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: applicationTitle,
+      theme: customThemeData,
       initialRoute: MainRoutes.dashboard,
       routes: routes,
     );
