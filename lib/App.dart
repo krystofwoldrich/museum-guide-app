@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './routes/MainRoutes.dart';
+import './screens/Dashboard.dart';
 
 class MyApp extends StatelessWidget {
   final applicationTitle = 'Museum Guide';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   }
 
   Widget _buildDashboard(BuildContext context) {
-    throw Exception('Method not implemented.');
+    return Dashboard();
   }
 
   Widget _buildTickets(BuildContext context) {
