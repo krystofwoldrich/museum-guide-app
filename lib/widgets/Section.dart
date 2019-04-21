@@ -30,9 +30,24 @@ class Section extends StatelessWidget {
     }
 
     if (isRow) {
-      sectionBody.add(Row(children: content));
+      sectionBody.add(Container(
+        width: double.infinity,
+        height: 102,
+        child:  ListView(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          children: this.content,
+        ),
+      ));
     } else {
-      sectionBody.add(Column(children: content));
+      sectionBody.add(Column(
+        children: this.content
+          .map((Widget item) => SizedBox(
+            width: double.infinity, 
+            child: item,
+          ))
+          .toList()
+      ));
     }
 
     return sectionBody;

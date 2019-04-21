@@ -1,10 +1,9 @@
 import './AppState.dart' show AppState;
-import './actions.dart' as Actions;
+import './reducers/ticketsReducer.dart' show ticketsReducer;
 
 AppState appReducer(AppState prevState, dynamic action) {
-  if (action is Actions.DummyAction) {
-    return new AppState();
-  } else {
-    return prevState;
-  }
+  return AppState(
+    tickets: ticketsReducer(prevState.tickets, action),
+  );
 }
+
