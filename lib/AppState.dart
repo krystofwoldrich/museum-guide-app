@@ -12,14 +12,5 @@ class AppState {
 }
 
 final initialState = new AppState(
-  tickets: [Ticket(
-    name: 'trs',
-    description: 'adda',
-    price: 12.88,
-  ),
-  Ticket(
-    name: 'trsss',
-    description: 'adda',
-    price: 12.88,
-  )]
+  tickets: []
 );
