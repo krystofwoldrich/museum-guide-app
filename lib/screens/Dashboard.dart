@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../layouts/LayoutWithAppBarWithBottomNavigation.dart';
 import '../widgets/PageContentContainer.dart';
 import '../characterStyles/ScreenTitle.dart';
 import '../widgets/Section.dart';
@@ -12,15 +11,13 @@ import '../widgets/cards/TicketCard.dart';
 class Dashboard extends StatelessWidget {
   final String _title = 'Welcome';
 
+  Dashboard({Key key}): super(key: key);
+
   @override
   Widget build(BuildContext context) {
     StoreProvider.of<AppState>(context).dispatch(getTickets);
 
-    return LayoutWithAppBarWithBottomNavigation(
-      child: this._getContent(), 
-      title: this._getTextTitle(), 
-      leading: null
-    );
+    return this._getContent();
   }
 
   Widget _getContent() {
@@ -34,10 +31,6 @@ class Dashboard extends StatelessWidget {
         children: dashboardContent,
       ),
     );
-  }
-
-  Text _getTextTitle() {
-    return Text(this._title);
   }
 
   Widget _createSectionWithStore() {
