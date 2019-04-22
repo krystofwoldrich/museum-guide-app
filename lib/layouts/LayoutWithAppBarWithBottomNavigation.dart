@@ -1,33 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:museum_guide_app/AppState.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:museum_guide_app/screens/Dashboard.dart';
+import 'package:redux/redux.dart';
+import '../actions/navigation.dart' show ChangeTab;
 
 class LayoutWithAppBarWithBottomNavigation extends StatelessWidget {
-  final Text title;
-  final Widget child;
-  final IconButton leading;
-
-  LayoutWithAppBarWithBottomNavigation(
-    {this.child, 
-    this.title,
-    this.leading}
-  );
+  LayoutWithAppBarWithBottomNavigation();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: this._getAppBar(),
-      bottomNavigationBar: this._getBottomNavigationBar(),
-      body: this.child,
+    List<Widget> tabsWidgets = [
+      Dashboard(key: PageStorageKey('dashboard')),
+      null,
+      null,
+      null
+    ];
+
+    return StoreConnector(
+      converter: (Store<AppState> store) => store.state.currentBottomTabIndex,
+      builder: (BuildContext context, int currentTabIndex) => Scaffold(
+        appBar: this._getAppBar(),
+        bottomNavigationBar: this._getBottomNavigationBar(context, currentTabIndex),
+        body: tabsWidgets[currentTabIndex],
+      ),
     );
   }
 
   PreferredSizeWidget _getAppBar() {
     return AppBar(
-      title: this.title,
-      leading: this.leading,
+      title: Text('Welcome'),
     );
   }
 
-  Widget _getBottomNavigationBar() {
+  Widget _getBottomNavigationBar(BuildContext context, int currentTabIndex) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       items: [
@@ -48,6 +54,10 @@ class LayoutWithAppBarWithBottomNavigation extends StatelessWidget {
           title: Text('Search')
         )
       ],
+      currentIndex: currentTabIndex,
+      onTap: (int tappedIndex) => StoreProvider
+        .of<AppState>(context)
+        .dispatch(ChangeTab(tappedIndex)),
     );
   }
 }
