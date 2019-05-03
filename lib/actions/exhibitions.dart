@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 import 'package:museum_guide_app/AppState.dart';
