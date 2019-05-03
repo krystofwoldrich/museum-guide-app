@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 import 'package:museum_guide_app/AppState.dart';
+import 'package:museum_guide_app/helpers/apiHostUrlLoader.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import '../model/Exhibition.dart';
@@ -20,13 +21,6 @@ class FetchExhibitionsResponseSuccess {
 
 @immutable
 class FetchExhibitionsResponseError { }
-
-Future<String> loadApiHostUrl() async {
-  final config = await rootBundle.loadString('./config.json');
-  final decodedConfig = json.decode(config);
-
-  return decodedConfig['apiHostUrl'];
-}
 
 ThunkAction<AppState> getExhibitions = (Store<AppState> store) async {
   store.dispatch(FetchExhibitionsRequest());
