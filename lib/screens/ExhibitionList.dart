@@ -5,14 +5,14 @@ import '../widgets/PageContentContainer.dart';
 import '../widgets/Section.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../AppState.dart';
-import '../actions/exhibitions.dart' show getExhibitions;
+import '../actions/exhibitions.dart' show getActualExhibitions;
 
 class ExhibitionList extends StatelessWidget {
   ExhibitionList({Key key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    StoreProvider.of<AppState>(context).dispatch(getExhibitions);
+    StoreProvider.of<AppState>(context).dispatch(getActualExhibitions);
     return this._getContent();
   }
 
