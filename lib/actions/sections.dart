@@ -29,7 +29,7 @@ ThunkAction<AppState> getSectionByExhibition(int exhibitionId) {
     try {
       Response response = await post(
           api,
-          body: { 'query': '{sections(where: {exhibition: {id: ${exhibitionId}}){id, name, description}}' }
+          body: { 'query': '{sections(where: {exhibition: {id: $exhibitionId}}){id, name, description}}' }
       );
 
       List sections = json.decode(response.body)['data']['sections'];
