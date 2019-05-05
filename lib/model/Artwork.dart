@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:museum_guide_app/model/Author.dart';
 
 @immutable
 class Artwork {
@@ -6,11 +7,12 @@ class Artwork {
   final String title;
   final String description;
   final DateTime made;
+  final Author author;
 
   Artwork({
     this.id,
     this.title,
     this.description,
-    this.made
-  });
+    this.made,
+    this.author});
 }

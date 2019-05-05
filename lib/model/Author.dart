@@ -1,17 +1,18 @@
 import 'package:meta/meta.dart';
-import 'package:museum_guide_app/model/Step.dart';
 
 @immutable
-class Tour {
+class Author {
   final String id;
   final String name;
   final String description;
-  final List<Step> steps;
+  final DateTime born;
+  final DateTime died;
 
-  Tour({
+  Author({
     this.id,
     this.name,
     this.description,
-    this.steps
+    this.born,
+    this.died
   });
 }
