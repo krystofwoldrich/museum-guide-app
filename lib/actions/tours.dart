@@ -56,7 +56,7 @@ ThunkAction<AppState> getTours = (Store<AppState> store) async {
   try {
     Response response = await post(
       api,
-      body: { 'query': '{tours{id, title, description}}' }
+      body: { 'query': '{tours{id, name, description}}' }
     );
 
     List tours = json.decode(response.body)['data']['tours'];

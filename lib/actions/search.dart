@@ -30,7 +30,7 @@ ThunkAction<AppState> getSearchResults(String searchedTerm) {
     try {
       Response response = await post(
           api,
-          body: { 'query': '{exhibition(where: {description_contains: \"$searchedTerm\"}){id, name, description}}' }
+          body: { 'query': '{exhibition(where: {description_contains: \"$searchedTerm\"}){id, title, description}}' }
       );
 
       List search = json.decode(response.body)['data']['search'];
@@ -39,7 +39,7 @@ ThunkAction<AppState> getSearchResults(String searchedTerm) {
       store.dispatch(FetchSearchResponseSuccess(
           search.map((section) => SearchResult(
             id: section['id'],
-            title: section['name'],
+            title: section['title'],
             description: section['description'],
             searchResultType: SearchResultType.Exhibition
           )).toList()

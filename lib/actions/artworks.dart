@@ -39,7 +39,7 @@ ThunkAction<AppState> getArtworkBySection(int sectionId) {
             id: artwork['id'],
             title: artwork['title'],
             description: artwork['description'],
-            made: DateTime.parse(artwork['description']),
+            made: DateTime.parse(artwork['made']),
           )).toList()
       ));
     } catch (e) {
@@ -57,7 +57,7 @@ ThunkAction<AppState> getArtworks = (Store<AppState> store) async {
   try {
     Response response = await post(
       api,
-      body: { 'query': '{artworks{id, title, description}}' }
+      body: { 'query': '{artworks{id, title, description, made}}' }
     );
 
     List artworks = json.decode(response.body)['data']['artworks'];
@@ -67,7 +67,7 @@ ThunkAction<AppState> getArtworks = (Store<AppState> store) async {
           id: artwork['id'],
           title: artwork['title'],
           description: artwork['description'],
-          made: DateTime.parse(artwork['description']),
+          made: DateTime.parse(artwork['made']),
         )).toList()
     ));
   } catch (e) {

@@ -56,7 +56,7 @@ ThunkAction<AppState> getSections = (Store<AppState> store) async {
   try {
     Response response = await post(
       api,
-      body: { 'query': '{sections{id, title, description}}' }
+      body: { 'query': '{sections{id, name, description}}' }
     );
 
     List sections = json.decode(response.body)['data']['sections'];
