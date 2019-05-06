@@ -7,6 +7,7 @@ class Step {
   final String id;
   final String title;
   final String description;
+  final int index;
   final Location location;
   final List<Multimedia> multimedias;
 
@@ -14,6 +15,7 @@ class Step {
     this.id,
     this.title,
     this.description,
+    this.index,
     this.location,
     this.multimedias
   });
