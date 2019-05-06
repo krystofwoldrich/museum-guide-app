@@ -114,7 +114,7 @@ ThunkAction<AppState> getExhibitionDetail(int exhibitionId) {
     try {
       Response response = await post(
           api,
-          body: { 'query': '{exhibitions(where: {id: $exhibitionId}){id, title, description, from, to, sections{name}}}' }
+          body: { 'query': '{exhibitions(where: {id: $exhibitionId}){id, title, description, from, to, sections{id, name}}}' }
       );
 
       List exhibitions = json.decode(response.body)['data']['exhibitions'];
@@ -127,6 +127,7 @@ ThunkAction<AppState> getExhibitionDetail(int exhibitionId) {
             from: DateTime.parse(exhibition['from']),
             to: DateTime.parse(exhibition['to']),
             sections: List<Section>.from((exhibition['sections']).map((section) => Section(
+                id: section['id'],
                 name: section['name']
             )).toList()),
           )).toList()
