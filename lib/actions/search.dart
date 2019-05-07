@@ -9,7 +9,11 @@ import 'package:redux_thunk/redux_thunk.dart';
 import '../model/SearchResult.dart';
 
 @immutable
-class FetchSearchRequest { }
+class FetchSearchRequest {
+  final String query;
+
+  FetchSearchRequest({@required this.query});
+}
 
 @immutable
 class FetchSearchResponseSuccess {
@@ -24,29 +28,76 @@ class FetchSearchResponseError { }
 
 ThunkAction<AppState> getSearchResults(String searchedTerm) {
   return (Store<AppState> store) async {
-    store.dispatch(FetchSearchRequest());
+    store.dispatch(FetchSearchRequest(query: searchedTerm));
     final api = await loadApiHostUrl();
 
+    const List<Map<String, String>> searchCategories = [
+      {
+        'category'  : 'exhibitions',
+        'field'     : 'description_contains',
+      },
+      {
+        'category'  : 'exhibitions',
+        'field'     : 'title_contains',
+      },
+      {
+        'category'  : 'artworks',
+        'field'     : 'title_contains',
+      },
+    ];
+
     try {
-      Response response = await post(
+      final List<Future<Response>> searchResultsFutures = searchCategories.map((Map<String, String> searchCategory) {
+        return post(
           api,
-          body: { 'query': '{exhibition(where: {description_contains: \"$searchedTerm\"}){id, title, description}}' }
-      );
+          body: { 'query': """{
+            ${searchCategory['category']}(where: {
+                ${searchCategory['field']}: \"$searchedTerm\"
+              }){
+              id, 
+              title, 
+              description
+            }}""" }
+        );
+      }).toList();
 
-      List search = json.decode(response.body)['data']['search'];
-      //TODO load data from other entities
+      final List<Response> searchResponses = await Future.wait(searchResultsFutures);
 
-      store.dispatch(FetchSearchResponseSuccess(
-          search.map((section) => SearchResult(
-            id: section['id'],
-            title: section['title'],
-            description: section['description'],
-            searchResultType: SearchResultType.Exhibition
-          )).toList()
-      ));
+      final List searchLists = searchResponses.asMap().map((int index, Response response) {
+        return MapEntry(index, json.decode(response.body)['data'][searchCategories[index]['category']]);
+      }).values.toList();
+
+      final Map<String, SearchResult> search = Map();
+      searchLists.asMap().forEach((int categoryIndex, results) {
+        (results as List).forEach((result) {
+          search.putIfAbsent(
+            searchCategories[categoryIndex]['category'] + result['id'], 
+            () => SearchResult(
+              id: result['id'],
+              title: result['title'],
+              description: result['description'],
+              searchResultType: _getSearchResultTypeByCategory(searchCategories[categoryIndex]['category']),
+            )
+          );
+        });
+      });
+
+      store.dispatch(FetchSearchResponseSuccess(search.values.toList()));
     } catch (e) {
       //TODO: sentry error log
+      print(e);
       store.dispatch(FetchSearchResponseError());
     }
   };
+}
+
+SearchResultType _getSearchResultTypeByCategory(String category) {
+  switch (category) {
+    case 'exhibitions':
+      return SearchResultType.Exhibition;  
+    case 'artworks':
+      return SearchResultType.Artwork;
+    default:
+     throw Exception('Unknown category');
+  }
 }
