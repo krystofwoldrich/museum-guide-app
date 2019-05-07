@@ -1,0 +1,105 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:barcode_scan/barcode_scan.dart';
+import 'package:museum_guide_app/AppState.dart';
+
+import '../../actions/search.dart' show getSearchResults;
+
+import 'package:museum_guide_app/characterStyles/ScreenTitle.dart';
+import 'package:museum_guide_app/screens/search/SearchResults.dart';
+import 'package:museum_guide_app/widgets/PageContentContainer.dart';
+
+class Search extends StatefulWidget {
+
+  Search({Key key}): super(key: key);
+
+  @override
+  _SearchState createState() => _SearchState();
+}
+
+class _SearchState extends State<Search> {
+  String barcode = "";
+
+  @override
+  Widget build(BuildContext context) {
+    return PageContentContainer(
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: ListView(
+          children: <Widget>[
+            ScreenTitle('Search'),
+            SearchField(),
+            SearchByQrCodeButton(
+              onPressed: (String qrCode) {
+                this._onQrCodeScan(context, qrCode);
+              },
+            ),
+          ],
+        ),
+      )
+    );
+  }
+
+  void _onQrCodeScan(BuildContext context, String codeData) {
+    if (codeData == null || codeData == "") {
+      return;
+    }
+
+    StoreProvider.of<AppState>(context).dispatch(getSearchResults(codeData));
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => SearchResults(),
+    ));
+  }
+}
+
+class SearchField extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: TextField(
+        onSubmitted: (String searchValue) => this._onSubmittedTextField(context, searchValue),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+        ),
+      ),
+    );
+  }
+
+  void _onSubmittedTextField(BuildContext context, String value) {
+    if (value == "") {
+      return;
+    }
+
+    StoreProvider.of<AppState>(context).dispatch(getSearchResults(value));
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => SearchResults(),
+    ));
+  }
+}
+
+class SearchByQrCodeButton extends StatelessWidget {
+  final Function onPressed;
+
+  SearchByQrCodeButton({@required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      child: Text('Scan QR code'),
+      onPressed: () => this._scanQrCode(context),
+    );
+  }
+
+  Future _scanQrCode(BuildContext context)  async {
+    try {
+      String barcode = await BarcodeScanner.scan();
+      print(barcode);
+      this.onPressed(barcode);
+    } catch (e) {
+      print(e);
+      this.onPressed(null);
+    }
+  }
+}

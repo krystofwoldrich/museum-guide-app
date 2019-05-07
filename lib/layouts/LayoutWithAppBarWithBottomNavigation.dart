@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:museum_guide_app/AppState.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:museum_guide_app/screens/Dashboard.dart';
+import 'package:museum_guide_app/screens/search/Search.dart';
 import 'package:redux/redux.dart';
 import '../actions/navigation.dart' show ChangeTab;
 
@@ -14,7 +15,7 @@ class LayoutWithAppBarWithBottomNavigation extends StatelessWidget {
       Dashboard(key: PageStorageKey('dashboard')),
       null,
       null,
-      null
+      Search(key: PageStorageKey('search')),
     ];
 
     return StoreConnector(
