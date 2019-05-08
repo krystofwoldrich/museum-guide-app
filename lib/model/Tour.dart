@@ -7,11 +7,13 @@ class Tour {
   final String name;
   final String description;
   final List<Step> steps;
+  final double lengthInHours;
 
   Tour({
     this.id,
     this.name,
     this.description,
-    this.steps
+    this.steps,
+    this.lengthInHours,
   });
 }
