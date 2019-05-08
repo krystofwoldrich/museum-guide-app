@@ -35,6 +35,7 @@ class ExhibitionList extends StatelessWidget {
         title: 'Exhibitions',
         content: exhibitions
           .map((Exhibition exhibition) => ExhibitionCard(
+            id: exhibition.id,
             title: exhibition.title,
             description: exhibition.description,
             from: exhibition.from,

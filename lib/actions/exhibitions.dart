@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:museum_guide_app/AppState.dart';
 import 'package:museum_guide_app/helpers/apiHostUrlLoader.dart';
 import 'package:museum_guide_app/model/Section.dart';
+import 'package:museum_guide_app/model/Tour.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import '../model/Exhibition.dart';
@@ -106,35 +107,54 @@ ThunkAction<AppState> getFutureExhibitions = (Store<AppState> store) async {
   }
 };
 
-ThunkAction<AppState> getExhibitionDetail(int exhibitionId) {
+@immutable
+class FetchExhibitionDetailRequest { }
+
+@immutable
+class FetchExhibitionDetailResponseSuccess {
+  final Exhibition exhibition;
+
+  FetchExhibitionDetailResponseSuccess(this.exhibition);
+}
+
+@immutable
+class FetchExhibitionDetailResponseError { }
+
+ThunkAction<AppState> getExhibitionDetail(String exhibitionId) {
   return (Store<AppState> store) async {
-    store.dispatch(FetchExhibitionsRequest());
+    store.dispatch(FetchExhibitionDetailRequest());
     final api = await loadApiHostUrl();
 
     try {
       Response response = await post(
           api,
-          body: { 'query': '{exhibitions(where: {id: $exhibitionId}){id, title, description, from, to, sections{id, name}}}' }
+          body: { 'query': '{exhibitions(where: {id: $exhibitionId}){id, title, description, from, to, sections{id, name}, tours{id, name, description}}}' }
       );
 
-      List exhibitions = json.decode(response.body)['data']['exhibitions'];
+      dynamic exhibition = json.decode(response.body)['data']['exhibitions'][0];
 
-      store.dispatch(FetchExhibitionsResponseSuccess(
-          exhibitions.map((exhibition) => Exhibition(
-            id: exhibition['id'],
-            title: exhibition['title'],
-            description: exhibition['description'],
-            from: DateTime.parse(exhibition['from']),
-            to: DateTime.parse(exhibition['to']),
-            sections: List<Section>.from((exhibition['sections']).map((section) => Section(
-                id: section['id'],
-                name: section['name']
-            )).toList()),
-          )).toList()
+      store.dispatch(FetchExhibitionDetailResponseSuccess(
+        Exhibition(
+          id: exhibition['id'],
+          title: exhibition['title'],
+          description: exhibition['description'],
+          from: DateTime.parse(exhibition['from']),
+          to: DateTime.parse(exhibition['to']),
+          sections: List<Section>.from((exhibition['sections']).map((section) => Section(
+              id: section['id'],
+              name: section['name']
+          )).toList()),
+          tours: List<Tour>.from((exhibition['tours']).map((tour) => Tour(
+              id: tour['id'],
+              name: tour['name'],
+              description: tour['description'],
+              lengthInHours: 2.5, //TODO: load when it's added to the api
+          )).toList()),
+        )
       ));
     } catch (e) {
       //TODO: sentry error log
-      store.dispatch(FetchExhibitionsResponseError());
+      store.dispatch(FetchExhibitionDetailResponseError());
     }
   };
 }
