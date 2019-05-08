@@ -6,6 +6,7 @@ import 'package:museum_guide_app/actions/exhibitions.dart';
 import 'package:museum_guide_app/model/Exhibition.dart';
 import 'package:museum_guide_app/model/Section.dart' as SectionModel;
 import 'package:museum_guide_app/model/Tour.dart';
+import 'package:museum_guide_app/screens/ToursList.dart';
 import 'package:museum_guide_app/widgets/Section.dart';
 import 'package:museum_guide_app/widgets/cards/SectionCard.dart';
 import 'package:museum_guide_app/widgets/cards/TourCard.dart';
@@ -32,13 +33,13 @@ class ExhibitionDetail extends StatelessWidget {
           appBar: AppBar(
             title: Text(exhibition.title),
           ),
-          body: this._getContent(exhibition),
+          body: this._getContent(context, exhibition),
         );
       },
     );
   }
 
-  Widget _getContent(Exhibition exhibition) {
+  Widget _getContent(BuildContext context, Exhibition exhibition) {
     final List<Widget> content = [];
 
     content.add(Section(
@@ -87,6 +88,11 @@ class ExhibitionDetail extends StatelessWidget {
           );
         }).toList(),
         isRow: true,
+        onMore: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => ToursList(exhibitionId: exhibition.id,),
+          ));
+        },
       ));
     }
 
