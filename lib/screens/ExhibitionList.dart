@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:museum_guide_app/model/Exhibition.dart';
 import 'package:museum_guide_app/widgets/cards/ExhibitionCard.dart';
-import '../widgets/PageContentContainer.dart';
 import '../widgets/Section.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../AppState.dart';
-import '../actions/exhibitions.dart' show getActualExhibitions;
 
 class ExhibitionList extends StatelessWidget {
   ExhibitionList({Key key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    StoreProvider.of<AppState>(context).dispatch(getActualExhibitions);
     return this._getContent();
   }
 
@@ -21,8 +18,11 @@ class ExhibitionList extends StatelessWidget {
 
     exhibitionListContent.add(this._createSectionWithStore());
 
-    return PageContentContainer(
-      child: ListView(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Exhibitions'),
+      ),
+      body: ListView(
         children: exhibitionListContent,
       ),
     );

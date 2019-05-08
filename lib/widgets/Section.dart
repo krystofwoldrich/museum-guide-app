@@ -6,10 +6,15 @@ class Section extends StatelessWidget {
   final String title;
   final List<Widget> content;
 
+  final String onMoreTitle;
+  final void Function() onMore;
+
   Section({
     this.title,
     @required this.content,
-    this.isRow = false
+    this.isRow = false,
+    this.onMoreTitle = 'Show More',
+    this.onMore,
   });
 
   @override
@@ -17,16 +22,16 @@ class Section extends StatelessWidget {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: this._getSectionBody(),
+        children: this._getSectionBody(context),
       ),
     );
   }
 
-  List<Widget> _getSectionBody() {
+  List<Widget> _getSectionBody(BuildContext context) {
     List<Widget> sectionBody = [];
 
     if (title != null) {
-      sectionBody.add(SectionTitle(title));
+      sectionBody.add(this._getHeader(context));
     }
 
     if (isRow) {
@@ -51,5 +56,24 @@ class Section extends StatelessWidget {
     }
 
     return sectionBody;
+  }
+
+  Widget _getHeader(BuildContext context) {
+    final List<Widget> content = [SectionTitle(title)];
+
+    if (this.onMore != null) {
+      content.add(FlatButton(
+        child: Text(
+          this.onMoreTitle.toUpperCase(),
+          style: TextStyle(color: Theme.of(context).primaryColor),
+        ),
+        onPressed: this.onMore,
+      ));
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: content,
+    );
   }
 }
