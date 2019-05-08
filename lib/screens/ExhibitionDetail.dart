@@ -6,6 +6,7 @@ import 'package:museum_guide_app/actions/exhibitions.dart';
 import 'package:museum_guide_app/model/Exhibition.dart';
 import 'package:museum_guide_app/model/Section.dart' as SectionModel;
 import 'package:museum_guide_app/model/Tour.dart';
+import 'package:museum_guide_app/screens/TourDetail.dart';
 import 'package:museum_guide_app/screens/ToursList.dart';
 import 'package:museum_guide_app/widgets/Section.dart';
 import 'package:museum_guide_app/widgets/cards/SectionCard.dart';
@@ -84,7 +85,14 @@ class ExhibitionDetail extends StatelessWidget {
             title: tour.name,
             description: tour.description,
             lengthInHours: tour.lengthInHours,
-            // onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => TourDetail(
+                  exhibitionId: this.exhibitionId,
+                  tourId: tour.id,
+                ),
+              ));
+            },
           );
         }).toList(),
         isRow: true,
