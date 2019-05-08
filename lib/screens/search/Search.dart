@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:museum_guide_app/AppState.dart';
+import 'package:museum_guide_app/model/SearchResult.dart';
+import 'package:museum_guide_app/widgets/Section.dart';
+import 'package:museum_guide_app/widgets/cards/ExhibitionCard.dart';
 
 import '../../actions/search.dart' show getSearchResults;
 
@@ -36,6 +39,7 @@ class _SearchState extends State<Search> {
                 this._onQrCodeScan(context, qrCode);
               },
             ),
+            this._getLastResults(context),
           ],
         ),
       )
@@ -51,6 +55,22 @@ class _SearchState extends State<Search> {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => SearchResults(),
     ));
+  }
+
+  Widget _getLastResults(BuildContext context) {
+    return StoreConnector<AppState, List<SearchResult>>(
+      converter: (store) => store.state.search.results,
+      builder: (_, List<SearchResult> searchResults) {
+        return Section(
+          title: 'Last results',
+          content: searchResults.map((SearchResult result) => ExhibitionCard(
+            id: result.id,
+            title: result.title,
+            description: result.description,
+          )).toList(),
+        );
+      },
+    );
   }
 }
 
