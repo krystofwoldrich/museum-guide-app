@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:museum_guide_app/actions/exhibitions.dart';
 import 'package:museum_guide_app/model/Exhibition.dart';
+import 'package:museum_guide_app/screens/ExhibitionList.dart';
 import 'package:museum_guide_app/widgets/cards/ExhibitionCard.dart';
 import '../widgets/PageContentContainer.dart';
 import '../characterStyles/ScreenTitle.dart';
@@ -25,15 +26,15 @@ class Dashboard extends StatelessWidget {
       StoreProvider.of<AppState>(context).dispatch(getActualExhibitions);
     }
 
-    return this._getContent();
+    return this._getContent(context);
   }
 
-  Widget _getContent() {
+  Widget _getContent(BuildContext context) {
     final List<Widget> dashboardContent = [];
 
     dashboardContent.add(ScreenTitle(this._title));
     dashboardContent.add(this._createTickets());
-    dashboardContent.add(this._createExhibitions());
+    dashboardContent.add(this._createExhibitions(context));
 
     return PageContentContainer(
       child: ListView(
@@ -58,7 +59,7 @@ class Dashboard extends StatelessWidget {
     );
   }
 
-  Widget _createExhibitions() {
+  Widget _createExhibitions(BuildContext context) {
     return StoreConnector<AppState, List<Exhibition>>(
       converter: (store) => store.state.exhibitions,
       builder: (_, List<Exhibition> tickets) => Section(
@@ -70,6 +71,11 @@ class Dashboard extends StatelessWidget {
             description: exhibition.description,
           ))
           .toList(),
+        onMore: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => ExhibitionList(),
+          ));
+        },
       ),
     );
   }
