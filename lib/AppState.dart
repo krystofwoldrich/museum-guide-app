@@ -39,8 +39,8 @@ class SearchState {
 
   SearchState({
     @required this.loading,
-    @required history,
-    @required results,
+    @required List<String> history,
+    @required List<SearchResult> results,
   }) :
     this.history = List.unmodifiable(history),
     this.results = List.unmodifiable(results);
