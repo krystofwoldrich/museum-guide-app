@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:museum_guide_app/screens/ExhibitionDetail.dart';
 
 class ExhibitionCard extends StatelessWidget {
+  final String id;
   final String title;
   final String description;
   final DateTime from;
   final DateTime to;
 
   ExhibitionCard({
+    @required this.id,
     @required this.title,
     @required this.description,
     this.from,
@@ -32,9 +35,16 @@ class ExhibitionCard extends StatelessWidget {
     return Container(
       width: 200,
       child: Card(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: content,
+        child: InkWell(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: content,
+          ),
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => ExhibitionDetail(exhibitionId: this.id,),
+            ));
+          },
         ),
       ),
     );

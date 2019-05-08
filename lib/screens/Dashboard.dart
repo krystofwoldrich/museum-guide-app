@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:museum_guide_app/actions/exhibitions.dart';
+import 'package:museum_guide_app/model/Exhibition.dart';
+import 'package:museum_guide_app/widgets/cards/ExhibitionCard.dart';
 import '../widgets/PageContentContainer.dart';
 import '../characterStyles/ScreenTitle.dart';
 import '../widgets/Section.dart';
@@ -15,7 +18,12 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    StoreProvider.of<AppState>(context).dispatch(getTickets);
+    if (StoreProvider.of<AppState>(context).state.tickets.length == 0) {
+      StoreProvider.of<AppState>(context).dispatch(getTickets);
+    }
+    if (StoreProvider.of<AppState>(context).state.exhibitions.length == 0) {    
+      StoreProvider.of<AppState>(context).dispatch(getActualExhibitions);
+    }
 
     return this._getContent();
   }
@@ -24,7 +32,8 @@ class Dashboard extends StatelessWidget {
     final List<Widget> dashboardContent = [];
 
     dashboardContent.add(ScreenTitle(this._title));
-    dashboardContent.add(this._createSectionWithStore());
+    dashboardContent.add(this._createTickets());
+    dashboardContent.add(this._createExhibitions());
 
     return PageContentContainer(
       child: ListView(
@@ -33,7 +42,7 @@ class Dashboard extends StatelessWidget {
     );
   }
 
-  Widget _createSectionWithStore() {
+  Widget _createTickets() {
     return StoreConnector<AppState, List<Ticket>>(
       converter: (store) => store.state.tickets,
       builder: (_, List<Ticket> tickets) => Section(
@@ -45,6 +54,22 @@ class Dashboard extends StatelessWidget {
           ))
           .toList(),
         isRow: true,
+      ),
+    );
+  }
+
+  Widget _createExhibitions() {
+    return StoreConnector<AppState, List<Exhibition>>(
+      converter: (store) => store.state.exhibitions,
+      builder: (_, List<Exhibition> tickets) => Section(
+        title: 'Exhibitions',
+        content: tickets
+          .map((Exhibition exhibition) => ExhibitionCard(
+            id: exhibition.id,
+            title: exhibition.title,
+            description: exhibition.description,
+          ))
+          .toList(),
       ),
     );
   }

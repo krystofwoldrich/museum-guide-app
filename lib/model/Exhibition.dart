@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:museum_guide_app/model/Section.dart';
+import 'package:museum_guide_app/model/Tour.dart';
 
 @immutable
 class Exhibition {
@@ -9,6 +10,7 @@ class Exhibition {
   final DateTime from;
   final DateTime to;
   final List<Section> sections;
+  final List<Tour> tours;
 
   Exhibition({
     this.id,
@@ -16,6 +18,7 @@ class Exhibition {
     this.description,
     this.from,
     this.to,
-    this.sections
+    this.sections,
+    this.tours,
   });
 }

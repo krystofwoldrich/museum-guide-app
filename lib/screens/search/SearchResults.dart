@@ -28,6 +28,7 @@ class SearchResults extends StatelessWidget {
 
   List<Widget> _getResultsWidgets(List<SearchResult> searchResults) {
     return searchResults.map((SearchResult result) => ExhibitionCard(
+      id: result.id,
       title: result.title,
       description: result.description,
     )).toList();
