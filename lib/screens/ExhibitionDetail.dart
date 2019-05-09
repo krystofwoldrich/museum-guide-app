@@ -6,6 +6,7 @@ import 'package:museum_guide_app/actions/exhibitions.dart';
 import 'package:museum_guide_app/model/Exhibition.dart';
 import 'package:museum_guide_app/model/Section.dart' as SectionModel;
 import 'package:museum_guide_app/model/Tour.dart';
+import 'package:museum_guide_app/screens/SectionList.dart';
 import 'package:museum_guide_app/screens/TourDetail.dart';
 import 'package:museum_guide_app/screens/ToursList.dart';
 import 'package:museum_guide_app/widgets/Section.dart';
@@ -73,6 +74,12 @@ class ExhibitionDetail extends StatelessWidget {
             // onTap: () {},
           );
         }).toList(),
+        isRow: true,
+        onMore: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => SectionList(exhibitionId: exhibition.id),
+          ));
+        },
       ));
     }
 
