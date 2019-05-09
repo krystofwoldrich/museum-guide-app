@@ -73,7 +73,10 @@ class TourDetail extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         print("Index: " + index.toString());
                         return StepDetail(
-                            actualStepIndex: index, steps: tour.steps);
+                            tourName: tour.name,
+                            step: tour.steps.firstWhere((step) => step.index == index),
+                          stepCount: tour.steps.length
+                        );
                       },
                       itemCount: tour.steps.length,
                     )));
