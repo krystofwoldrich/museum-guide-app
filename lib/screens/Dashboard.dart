@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:museum_guide_app/actions/exhibitions.dart';
 import 'package:museum_guide_app/model/Exhibition.dart';
-import 'package:museum_guide_app/screens/ExhibitionList.dart';
+import 'package:museum_guide_app/screens/ExhibitionTabs.dart';
 import 'package:museum_guide_app/widgets/cards/ExhibitionCard.dart';
 import '../widgets/PageContentContainer.dart';
 import '../characterStyles/ScreenTitle.dart';
@@ -22,9 +22,8 @@ class Dashboard extends StatelessWidget {
     if (StoreProvider.of<AppState>(context).state.tickets.length == 0) {
       StoreProvider.of<AppState>(context).dispatch(getTickets);
     }
-    if (StoreProvider.of<AppState>(context).state.exhibitions.length == 0) {    
-      StoreProvider.of<AppState>(context).dispatch(getActualExhibitions);
-    }
+
+    StoreProvider.of<AppState>(context).dispatch(getActualExhibitions);
 
     return this._getContent(context);
   }
@@ -73,7 +72,7 @@ class Dashboard extends StatelessWidget {
           .toList(),
         onMore: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => ExhibitionList(),
+            builder: (BuildContext context) => ExhibitionTabs(),
           ));
         },
       ),
