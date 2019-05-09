@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:museum_guide_app/screens/TourDetail.dart';
 
-class TourCard extends StatelessWidget {
-  static const double maxLengthInHours = 6; //hours
+class StepCard extends StatelessWidget {
   final String id;
   final String title;
   final String description;
-  final double lengthInHours;
   final void Function() onTap;
 
-  TourCard({
+  StepCard({
     @required this.id,
     @required this.title,
     @required this.description,
-    @required this.lengthInHours,
     void Function() onTap,
   }) : this.onTap = onTap != null ? onTap : (() {}) ;
 
@@ -31,11 +27,6 @@ class TourCard extends StatelessWidget {
       style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400)
     ));
 
-    content.add(Text(
-      this.lengthInHours != null ? this.lengthInHours.toString() : '3',
-      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400)
-    ));
-
     return Container(
       width: 200,
       child: Card(
@@ -44,11 +35,7 @@ class TourCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: content,
           ),
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => TourDetail(tourId: this.id,),
-            ));
-          },
+          onTap: this.onTap
         ),
       ),
     );
