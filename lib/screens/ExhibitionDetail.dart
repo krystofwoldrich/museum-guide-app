@@ -25,10 +25,7 @@ class ExhibitionDetail extends StatelessWidget {
 
     return StoreConnector<AppState, Exhibition>(
       converter: (store) {
-        final exhibitions = store.state.exhibitions;
-        final exhibitionsMap = exhibitions.asMap().map((_, exhibition) => MapEntry(exhibition.id, exhibition));
-
-        return exhibitionsMap[this.exhibitionId];
+        return store.state.exhibitionDetail;
       },
       builder: (BuildContext context, Exhibition exhibition) {
         return Scaffold(

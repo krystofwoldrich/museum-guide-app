@@ -22,8 +22,7 @@ class ToursList extends StatelessWidget {
       ),
       body: StoreConnector<AppState, List<Tour>>(
         converter: (store) {
-          final exhibitionsMap = store.state.exhibitions.asMap().map((_, exhibition) => MapEntry(exhibition.id, exhibition));
-          return exhibitionsMap[this.exhibitionId].tours;
+          return store.state.exhibitionDetail.tours;
         },
         builder: (BuildContext context, List<Tour> tours) => ListView(
           children: tours.map((tour) => TourCard(

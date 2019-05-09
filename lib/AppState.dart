@@ -9,6 +9,7 @@ class AppState {
   final int currentBottomTabIndex;
   final List<Ticket> tickets;
   final List<Exhibition> exhibitions;
+  final Exhibition exhibitionDetail;
   final List<Tour> tours;
   final SearchState search;
 
@@ -16,6 +17,7 @@ class AppState {
     @required this.currentBottomTabIndex,
     @required List<Ticket> tickets,
     @required List<Exhibition> exhibitions,
+    @required this.exhibitionDetail,
     @required List<Tour> tours,
     @required this.search,
   }) :
@@ -28,6 +30,7 @@ final initialState = new AppState(
   currentBottomTabIndex: 0,
   tickets: [],
   exhibitions: [],
+  exhibitionDetail: null,
   tours: [],
   search: SearchState(
     loading: false,
