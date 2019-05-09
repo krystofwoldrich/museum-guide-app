@@ -19,7 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  barcode_scan: ^0.0.8
+  barcode_scan: ^1.0.0
+  flutter_local_notifications: ^0.7.0
 
 dev_dependencies:
   flutter_test:
