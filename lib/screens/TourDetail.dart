@@ -4,6 +4,7 @@ import 'package:museum_guide_app/AppState.dart';
 import 'package:museum_guide_app/actions/tours.dart';
 import 'package:museum_guide_app/model/Tour.dart';
 import 'package:museum_guide_app/model/Step.dart' as StepModel;
+import 'package:museum_guide_app/screens/StepDetail.dart';
 import 'package:museum_guide_app/widgets/Section.dart';
 import 'package:museum_guide_app/widgets/cards/StepCard.dart';
 
@@ -19,9 +20,9 @@ class TourDetail extends StatelessWidget {
 
     return StoreConnector<AppState, Tour>(
       converter: (store) {
-
-       final tours = store.state.tours;
-        final toursMap = tours.asMap().map((_, tour) => MapEntry(tour.id, tour));
+        final tours = store.state.tours;
+        final toursMap =
+            tours.asMap().map((_, tour) => MapEntry(tour.id, tour));
         return toursMap[this.tourId];
       },
       builder: (BuildContext context, Tour tour) {
@@ -29,33 +30,47 @@ class TourDetail extends StatelessWidget {
           appBar: AppBar(
             title: Text(tour.name),
           ),
-          body: this._getContent(tour),
+          body: this._getContent(context, tour),
         );
       },
     );
   }
 
-  Widget _getContent(Tour tour) {
+  Widget _getContent(BuildContext context, Tour tour) {
     final List<Widget> content = [];
 
     content.add(Section(
       title: 'Description',
       content: <Widget>[
-        Text(tour.description != null ? tour.description : 'No description available.'),
+        Text(tour.description != null
+            ? tour.description
+            : 'No description available.'),
       ],
     ));
 
     if (tour.steps != null) {
       content.add(Section(
-        title: 'Steps',
-        content: tour.steps.map((StepModel.Step step) {
-          return StepCard(
-            id: step.id,
-            title: step.title,
-            description: "",
-          );
-        }).toList(),
-      ));
+          title: 'Steps',
+          content: tour.steps.map((StepModel.Step step) {
+            return StepCard(
+              id: step.id,
+              title: step.title,
+              description: "",
+            );
+          }).toList(),
+          onMoreTitle: "Start tour",
+          onMore: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => PageView.builder(
+                      controller: new PageController(),
+                      itemBuilder: (BuildContext context, int index) {
+                        print("Index: " + index.toString());
+                        return StepDetail(
+                            actualStepIndex: index, steps: tour.steps);
+                      },
+                      itemCount: tour.steps.length,
+                    )));
+          }));
     }
 
     return ListView(
