@@ -43,11 +43,11 @@ ThunkAction<AppState> getToursByExhibition(int exhibitionId) {
                 name: tour['name'],
                 description: tour['description'],
                 steps: List<Step>.from((tour['steps'])
-                    .map((section) => Step(
-                          id: section['id'],
-                          index: section['index'],
-                          title: section['title'],
-                          description: section['description'],
+                    .map((step) => Step(
+                          id: step['id'],
+                          index: step['index'],
+                          title: step['title'],
+                          description: step['description'],
                         ))
                     .toList()),
               ))
@@ -90,7 +90,7 @@ ThunkAction<AppState> getTourDetail(String tourId) {
     try {
       Response response = await post(api, body: {
         'query':
-            '{tours(where: {id: $tourId}){id, name, description, steps{id,title, description, index, location{id, name, room{id, name, number}}}}}'
+            '{tours(where: {id: $tourId}){id, name, description, steps{id,title, description, index, coverPicture{url}, location{id, name, room{id, name, number}}}}}'
       });
 
       List tours = json.decode(response.body)['data']['tours'];
@@ -101,18 +101,19 @@ ThunkAction<AppState> getTourDetail(String tourId) {
                 name: tour['name'],
                 description: tour['description'],
                 steps: List<Step>.from((tour['steps'])
-                    .map((section) => Step(
-                        id: section['id'],
-                        index: section['index'],
-                        title: section['title'],
-                        description: section['description'],
+                    .map((step) => Step(
+                        id: step['id'],
+                        index: step['index'],
+                        title: step['title'],
+                        description: step['description'],
+                        coverPictureUrl: step['coverPicture']['url'],
                         location: Location(
-                            id: section['location']['id'],
-                            name: section['location']['name'],
+                            id: step['location']['id'],
+                            name: step['location']['name'],
                             room: Room(
-                              id: section['location']['room']['id'],
-                              name: section['location']['room']['name'],
-                              number: section['location']['room']['number'],
+                              id: step['location']['room']['id'],
+                              name: step['location']['room']['name'],
+                              number: step['location']['room']['number'],
                             ))))
                     .toList()),
               ))

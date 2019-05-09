@@ -8,6 +8,7 @@ class Step {
   final String title;
   final String description;
   final int index;
+  final String coverPictureUrl;
   final Location location;
   final List<Multimedia> multimedias;
 
@@ -16,6 +17,7 @@ class Step {
     this.title,
     this.description,
     this.index,
+    this.coverPictureUrl,
     this.location,
     this.multimedias
   });
