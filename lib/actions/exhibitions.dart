@@ -31,7 +31,7 @@ ThunkAction<AppState> getPastExhibitions = (Store<AppState> store) async {
   try {
     Response response = await post(
         api,
-        body: { 'query': '{exhibitions(where: {to_lte: $date}){id, title, description, from, to}}' }
+        body: { 'query': '{exhibitions(where: {to_lte: \"$date\"}){id, title, description, from, to}}' }
     );
 
     List exhibitions = json.decode(response.body)['data']['exhibitions'];
@@ -87,7 +87,7 @@ ThunkAction<AppState> getFutureExhibitions = (Store<AppState> store) async {
   try {
     Response response = await post(
         api,
-        body: { 'query': '{exhibitions(where: {from_gte: $date}){id, title, description, from, to}}' }
+        body: { 'query': '{exhibitions(where: {from_gte: \"$date\"}){id, title, description, from, to}}' }
     );
 
     List exhibitions = json.decode(response.body)['data']['exhibitions'];
