@@ -9,6 +9,7 @@ import 'package:museum_guide_app/model/Tour.dart';
 import 'package:museum_guide_app/screens/SectionList.dart';
 import 'package:museum_guide_app/screens/TourDetail.dart';
 import 'package:museum_guide_app/screens/ToursList.dart';
+import 'package:museum_guide_app/widgets/LoadingWidget.dart';
 import 'package:museum_guide_app/widgets/Section.dart';
 import 'package:museum_guide_app/widgets/cards/SectionCard.dart';
 import 'package:museum_guide_app/widgets/cards/TourCard.dart';
@@ -28,12 +29,19 @@ class ExhibitionDetail extends StatelessWidget {
         return store.state.exhibitionDetail;
       },
       builder: (BuildContext context, Exhibition exhibition) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(exhibition.title),
-          ),
-          body: this._getContent(context, exhibition),
-        );
+        if (exhibition == null || exhibition.id != exhibitionId) {
+          return Scaffold(
+            appBar: AppBar(),
+            body: createLoadingWidget(context),
+          );
+        } else {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(exhibition.title),
+            ),
+            body: this._getContent(context, exhibition),
+          );
+        }
       },
     );
   }
