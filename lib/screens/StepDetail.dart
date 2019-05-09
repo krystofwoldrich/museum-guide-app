@@ -39,7 +39,7 @@ class StepDetailState extends State<StepDetail> {
   Widget _getContent(BuildContext context, StepModel.Step step) {
     final List<Widget> content = [];
 
-    content.add(Image.network("https://museum-guide-api.herokuapp.com" + step.coverPictureUrl));
+    content.add(Image.network(step.coverPictureUrl));
     content.add(Section(
       title: 'Description',
       content: <Widget>[
