@@ -82,7 +82,7 @@ ThunkAction<AppState> getTours = (Store<AppState> store) async {
   }
 };
 
-ThunkAction<AppState> getTourDetail(int tourId) {
+ThunkAction<AppState> getTourDetail(String tourId) {
   return (Store<AppState> store) async {
     store.dispatch(FetchToursRequest());
     final api = await loadApiHostUrl();
@@ -90,7 +90,7 @@ ThunkAction<AppState> getTourDetail(int tourId) {
     try {
       Response response = await post(api, body: {
         'query':
-            '{tours(where: {id: 1}){id, name, description, steps{id,title, description, index, location{id, name, room{id, name, number}}}}}'
+            '{tours(where: {id: $tourId}){id, name, description, steps{id,title, description, index, location{id, name, room{id, name, number}}}}}'
       });
 
       List tours = json.decode(response.body)['data']['tours'];
