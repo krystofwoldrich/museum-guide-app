@@ -26,12 +26,19 @@ class TourDetail extends StatelessWidget {
         return toursMap[this.tourId];
       },
       builder: (BuildContext context, Tour tour) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(tour.name),
-          ),
-          body: this._getContent(context, tour),
-        );
+        if (tour == null) {
+          return Scaffold(
+            appBar: AppBar(),
+            body: this._getLoading(context),
+          );
+        } else {
+           return Scaffold(
+            appBar: AppBar(
+              title: Text(tour.name),
+            ),
+            body: this._getContent(context, tour),
+          );
+        }
       },
     );
   }
@@ -77,4 +84,13 @@ class TourDetail extends StatelessWidget {
       children: content,
     );
   }
+
+  Widget _getLoading(BuildContext context) {
+    return new Center(
+      child: new CircularProgressIndicator(
+        valueColor: new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+      ),
+    );
+  }
+
 }
