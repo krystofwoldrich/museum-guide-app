@@ -5,6 +5,7 @@ import 'package:museum_guide_app/actions/tours.dart';
 import 'package:museum_guide_app/model/Tour.dart';
 import 'package:museum_guide_app/model/Step.dart' as StepModel;
 import 'package:museum_guide_app/screens/StepDetail.dart';
+import 'package:museum_guide_app/widgets/LoadingWidget.dart';
 import 'package:museum_guide_app/widgets/Section.dart';
 import 'package:museum_guide_app/widgets/cards/StepCard.dart';
 
@@ -26,10 +27,10 @@ class TourDetail extends StatelessWidget {
         return toursMap[this.tourId];
       },
       builder: (BuildContext context, Tour tour) {
-        if (tour == null) {
+        if (tour == null || tour.id != tourId) {
           return Scaffold(
             appBar: AppBar(),
-            body: this._getLoading(context),
+            body: createLoadingWidget(context),
           );
         } else {
            return Scaffold(
@@ -87,13 +88,4 @@ class TourDetail extends StatelessWidget {
       children: content,
     );
   }
-
-  Widget _getLoading(BuildContext context) {
-    return new Center(
-      child: new CircularProgressIndicator(
-        valueColor: new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-      ),
-    );
-  }
-
 }
