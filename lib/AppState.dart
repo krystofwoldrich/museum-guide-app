@@ -9,14 +9,14 @@ class AppState {
   final int currentBottomTabIndex;
   final List<Ticket> tickets;
   final List<Exhibition> exhibitions;
-  List<Tour> tours;
+  final List<Tour> tours;
   final SearchState search;
 
   AppState({
     @required this.currentBottomTabIndex,
     @required List<Ticket> tickets,
     @required List<Exhibition> exhibitions,
-    List<Tour> tours,
+    @required List<Tour> tours,
     @required this.search,
   }) :
     this.tickets = List.unmodifiable(tickets),
