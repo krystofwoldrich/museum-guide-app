@@ -21,8 +21,7 @@ class SectionList extends StatelessWidget {
       ),
       body: StoreConnector<AppState, List<Section>>(
         converter: (store) {
-          final exhibitionsMap = store.state.exhibitions.asMap().map((_, exhibition) => MapEntry(exhibition.id, exhibition));
-          return exhibitionsMap[this.exhibitionId].sections;
+          return store.state.exhibitionDetail.sections;
         },
         builder: (BuildContext context, List<Section> sections) => ListView(
           children: sections.map((section) => SectionCard(
