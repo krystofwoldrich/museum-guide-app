@@ -26,4 +26,12 @@ final ThemeData customThemeData =
         color: _colorDarkGrey
       ),
     ),
+    buttonTheme: ButtonThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(22)),
+        side: BorderSide(color: _colorRed, width: 1),
+      ),
+      buttonColor: _colorRed,
+      colorScheme: ColorScheme.dark(),
+    ),
   );
