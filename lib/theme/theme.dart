@@ -14,6 +14,7 @@ final ThemeData customThemeData =
     appBarTheme: AppBarTheme(
       brightness: Brightness.dark,
       color: _colorDarkGrey,
+      elevation: 0,
       textTheme: TextTheme(
         body1: TextStyle(
           color: _colorDarkGrey,
