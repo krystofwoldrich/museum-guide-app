@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './cardTheme.dart' show customCardTheme;
 
 final Color _colorGrey = Color.fromRGBO(240, 240, 240, 1);
 final Color _colorDarkGrey = Color.fromRGBO(64, 64, 64, 1);
@@ -11,6 +12,7 @@ final ThemeData customThemeData =
     primaryColor: _colorRed,
     accentColor: _colorRed,
     canvasColor: _colorGrey,
+    cardTheme: customCardTheme,
     appBarTheme: AppBarTheme(
       brightness: Brightness.dark,
       color: _colorDarkGrey,
