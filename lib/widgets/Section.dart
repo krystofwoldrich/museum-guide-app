@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:museum_guide_app/theme/theme.dart';
 import '../characterStyles/SectionTitle.dart';
 
 class Section extends StatelessWidget {
@@ -35,14 +36,16 @@ class Section extends StatelessWidget {
     }
 
     if (isRow) {
-      sectionBody.add(Container(
-        width: double.infinity,
-        height: 102,
-        child:  ListView(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          children: this.content,
-        ),
+      sectionBody.add(Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: this.content,
+            ),
+          ),
+        ],
       ));
     } else {
       sectionBody.add(Column(
