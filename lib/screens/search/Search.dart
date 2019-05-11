@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:museum_guide_app/AppState.dart';
 import 'package:museum_guide_app/model/SearchResult.dart';
+import 'package:museum_guide_app/theme/theme.dart';
 import 'package:museum_guide_app/widgets/Section.dart';
 import 'package:museum_guide_app/widgets/cards/ExhibitionCard.dart';
 
@@ -10,7 +11,6 @@ import '../../actions/search.dart' show getSearchResults;
 
 import 'package:museum_guide_app/characterStyles/ScreenTitle.dart';
 import 'package:museum_guide_app/screens/search/SearchResults.dart';
-import 'package:museum_guide_app/widgets/PageContentContainer.dart';
 
 class Search extends StatefulWidget {
 
@@ -25,24 +25,22 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    return PageContentContainer(
-      child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        child: ListView(
-          children: <Widget>[
-            ScreenTitle('Search'),
-            SearchField(),
-            SearchByQrCodeButton(
-              onPressed: (String qrCode) {
-                this._onQrCodeScan(context, qrCode);
-              },
-            ),
-            this._getLastResults(context),
-          ],
-        ),
-      )
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+      child: ListView(
+        children: <Widget>[
+          ScreenTitle('Search'),
+          SearchField(),
+          SearchByQrCodeButton(
+            onPressed: (String qrCode) {
+              this._onQrCodeScan(context, qrCode);
+            },
+          ),
+          this._getLastResults(context),
+        ],
+      ),
     );
   }
 
@@ -84,6 +82,7 @@ class SearchField extends StatelessWidget {
           border: OutlineInputBorder(),
         ),
       ),
+      margin: EdgeInsets.only(left: layoutMarginLeft, right: layoutMarginRight),
     );
   }
 
@@ -106,9 +105,12 @@ class SearchByQrCodeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      child: Text('Scan QR code'),
-      onPressed: () => this._scanQrCode(context),
+    return Container(
+      child: RaisedButton(
+        child: Text('Scan QR code'),
+        onPressed: () => this._scanQrCode(context),
+      ),
+      margin: EdgeInsets.only(left: layoutMarginLeft, right: layoutMarginRight),
     );
   }
 

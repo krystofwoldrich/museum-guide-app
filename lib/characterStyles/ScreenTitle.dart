@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:museum_guide_app/theme/theme.dart';
 
 class ScreenTitle extends StatelessWidget {
   final String _content;
@@ -7,9 +8,12 @@ class ScreenTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      this._content,
-      style: TextStyle(fontSize: 56, fontWeight: FontWeight.bold),
+    return Container(
+      child: Text(
+        this._content,
+        style: TextStyle(fontSize: 56, fontWeight: FontWeight.bold),
+      ),
+      margin: EdgeInsets.only(left: layoutMarginLeft),
     );
   }
 }

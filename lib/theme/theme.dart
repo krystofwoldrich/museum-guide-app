@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import './cardTheme.dart' show customCardTheme;
 
+const double _layoutMargin = 16;
+const double layoutMarginLeft = _layoutMargin;
+const double layoutMarginRight = _layoutMargin;
+
 final Color _colorGrey = Color.fromRGBO(240, 240, 240, 1);
 final Color _colorDarkGrey = Color.fromRGBO(64, 64, 64, 1);
 final Color _colorRed = Color.fromRGBO(128, 0, 0, 1);

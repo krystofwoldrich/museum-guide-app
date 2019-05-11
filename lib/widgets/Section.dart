@@ -74,9 +74,12 @@ class Section extends StatelessWidget {
       ));
     }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: content,
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: content,
+      ),
+      margin: EdgeInsets.only(left: layoutMarginLeft, right: layoutMarginRight),
     );
   }
 }
