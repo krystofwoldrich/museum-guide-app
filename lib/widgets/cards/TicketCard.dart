@@ -11,21 +11,33 @@ class TicketCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 200,
+    return Center(
       child: Card(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-              Text(
-                this.name,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600)
-              ),
-              Text(
-                this.price.toString(),
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400)
-              ),
-          ],
+        child: Container(
+          child: Column(
+            children: <Widget>[
+                Text(
+                  this.name,
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600)
+                ),
+                Container(
+                  child: Text(
+                    '€' + this.price.toString() + ' per person',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400)
+                  ),
+                  margin: EdgeInsets.only(top: 8),
+                ),
+            ],
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          padding: EdgeInsets.only(
+            left: 16,
+            top: 16,
+            right: 24,
+            bottom: 30,
+          ),
         ),
       ),
     );

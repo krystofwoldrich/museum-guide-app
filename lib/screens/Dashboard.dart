@@ -3,7 +3,6 @@ import 'package:museum_guide_app/actions/exhibitions.dart';
 import 'package:museum_guide_app/model/Exhibition.dart';
 import 'package:museum_guide_app/screens/ExhibitionTabs.dart';
 import 'package:museum_guide_app/widgets/cards/ExhibitionCard.dart';
-import '../widgets/PageContentContainer.dart';
 import '../characterStyles/ScreenTitle.dart';
 import '../widgets/Section.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -35,11 +34,9 @@ class Dashboard extends StatelessWidget {
     dashboardContent.add(this._createTickets());
     dashboardContent.add(this._createExhibitions(context));
 
-    return PageContentContainer(
-      child: ListView(
+    return ListView(
         children: dashboardContent,
-      ),
-    );
+      );
   }
 
   Widget _createTickets() {

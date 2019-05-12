@@ -35,7 +35,7 @@ class LayoutWithAppBarWithBottomNavigation extends StatelessWidget {
   }
 
   Widget _getBottomNavigationBar(BuildContext context, int currentTabIndex) {
-    return BottomNavigationBar(
+    return this._withCustomTheme(context, BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       items: [
         BottomNavigationBarItem(
@@ -59,6 +59,18 @@ class LayoutWithAppBarWithBottomNavigation extends StatelessWidget {
       onTap: (int tappedIndex) => StoreProvider
         .of<AppState>(context)
         .dispatch(ChangeTab(tappedIndex)),
+    ));
+  }
+
+  Widget _withCustomTheme(BuildContext context, Widget widget) {
+    return new Theme(
+      data: Theme.of(context).copyWith(
+         textTheme: Theme
+            .of(context)
+            .textTheme
+            .copyWith(caption: new TextStyle(color: Theme.of(context).textTheme.body1.color))
+      ),
+      child: widget,
     );
   }
 }
