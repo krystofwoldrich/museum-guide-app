@@ -32,7 +32,7 @@ ThunkAction<AppState> getToursByExhibition(int exhibitionId) {
     try {
       Response response = await post(api, body: {
         'query':
-            '{tours(where: {exhibition: {id: $exhibitionId}}){id, name, description, steps{id, index, title, description}}}'
+            '{tours(where: {exhibition: {id: $exhibitionId}}){id, name, description, coverPicture{sourceFile{url}}, steps{id, index, title, description}}}'
       });
 
       List tours = json.decode(response.body)['data']['tours'];
@@ -42,6 +42,7 @@ ThunkAction<AppState> getToursByExhibition(int exhibitionId) {
                 id: tour['id'],
                 name: tour['name'],
                 description: tour['description'],
+                coverPictureUrl: tour['coverPicture'] == null ? null : tour['coverPicture']['sourceFile']['url'],
                 steps: List<Step>.from((tour['steps'])
                     .map((step) => Step(
                           id: step['id'],
@@ -65,7 +66,7 @@ ThunkAction<AppState> getTours = (Store<AppState> store) async {
 
   try {
     Response response =
-        await post(api, body: {'query': '{tours{id, name, description}}'});
+        await post(api, body: {'query': '{tours{id, name, description, coverPicture{sourceFile{url}}}}'});
 
     List tours = json.decode(response.body)['data']['tours'];
 
@@ -74,6 +75,7 @@ ThunkAction<AppState> getTours = (Store<AppState> store) async {
               id: tour['id'],
               name: tour['name'],
               description: tour['description'],
+              coverPictureUrl: tour['coverPicture'] == null ? null : tour['coverPicture']['sourceFile']['url'],
             ))
         .toList()));
   } catch (e) {

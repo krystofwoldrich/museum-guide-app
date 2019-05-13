@@ -131,7 +131,7 @@ ThunkAction<AppState> getExhibitionDetail(String exhibitionId) {
     try {
       Response response = await post(
           api,
-          body: { 'query': '{exhibitions(where: {id: $exhibitionId}){id, title, description, from, to, sections{id, name, description}, tours{id, name, description}}}' }
+          body: { 'query': '{exhibitions(where: {id: $exhibitionId}){id, title, description, from, to, sections{id, name, description, coverPicture{sourceFile{url}}}, tours{id, name, description, coverPicture{sourceFile{url}}}}}' }
       );
 
       dynamic exhibition = json.decode(response.body)['data']['exhibitions'][0];
@@ -147,12 +147,14 @@ ThunkAction<AppState> getExhibitionDetail(String exhibitionId) {
               id: section['id'],
               name: section['name'],
               description: section['description'],
+              coverPictureUrl: exhibition['coverPicture'] == null ? null : exhibition['coverPicture']['sourceFile']['url'],
           )).toList()),
           tours: List<Tour>.from((exhibition['tours']).map((tour) => Tour(
               id: tour['id'],
               name: tour['name'],
               description: tour['description'],
               lengthInHours: 2.5, //TODO: load when it's added to the api
+              coverPictureUrl: exhibition['coverPicture'] == null ? null : exhibition['coverPicture']['sourceFile']['url'],
           )).toList()),
         )
       ));
