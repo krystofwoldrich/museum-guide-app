@@ -5,6 +5,7 @@ class ExhibitionCard extends StatelessWidget {
   final String id;
   final String title;
   final String description;
+  final String coverPictureUrl;
   final DateTime from;
   final DateTime to;
 
@@ -12,6 +13,7 @@ class ExhibitionCard extends StatelessWidget {
     @required this.id,
     @required this.title,
     @required this.description,
+    this.coverPictureUrl,
     this.from,
     this.to
   });
@@ -51,13 +53,7 @@ class ExhibitionCard extends StatelessWidget {
               right: 24,
               bottom: 30,
             ),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage('https://whitney.org/uploads/image/file/822181/Skull_red.jpg'),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(Color.fromRGBO(66, 66, 66, 0.68), BlendMode.srcOver),
-              ),
-            ),
+            decoration: this._getDecoration(context, imageUrl: this.coverPictureUrl),
           ),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
@@ -80,5 +76,21 @@ class ExhibitionCard extends StatelessWidget {
       ),
       child: widget,
     );  
+  }
+
+  Decoration _getDecoration(BuildContext context, {String imageUrl}) {
+    ImageProvider<dynamic> backgroundImage = AssetImage('images/exhibition-card-missing-cover.jpg');
+    if (imageUrl != null) {
+      backgroundImage = NetworkImage(imageUrl);
+    }
+
+    return BoxDecoration(
+      image: DecorationImage(
+        image: backgroundImage,
+        fit: BoxFit.cover,
+        colorFilter: ColorFilter.mode(Color.fromRGBO(66, 66, 66, 0.68), BlendMode.srcOver),
+      ),
+      color: Theme.of(context).textTheme.body1.color,
+    );
   }
 }

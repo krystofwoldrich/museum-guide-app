@@ -7,6 +7,7 @@ class Exhibition {
   final String id;
   final String title;
   final String description;
+  final String coverPictureUrl;
   final DateTime from;
   final DateTime to;
   final List<Section> sections;
@@ -16,6 +17,7 @@ class Exhibition {
     this.id,
     this.title,
     this.description,
+    this.coverPictureUrl,
     this.from,
     this.to,
     this.sections,
