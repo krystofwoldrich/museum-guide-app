@@ -134,10 +134,27 @@ class StepDetailState extends State<StepDetail> with WidgetsBindingObserver {
             ],
           )
         ),
-        AudioPlayer(
-          audioUrl: step.multimedias[0].fileUrl,
-        ),
+        this._getInteractiveContent(),
       ],
     );
+  }
+
+  Widget _getInteractiveContent() {
+    Widget noninteractiveContent = Container(
+      height: 186,
+    );
+
+    if (this.widget.step.multimedias == null || this.widget.step.multimedias.length <= 0) {
+      return noninteractiveContent;
+    }
+
+    //TODO: make list of all interactive items, first will hace big detail, rest will be in a list below
+    if (step.multimedias[0].type == 'audio') {
+      return AudioPlayer(
+        audioUrl: step.multimedias[0].fileUrl,
+      );
+    } else {
+      return noninteractiveContent;
+    }
   }
 }
