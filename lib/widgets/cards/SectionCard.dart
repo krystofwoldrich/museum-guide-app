@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:museum_guide_app/widgets/cards/localCardTheme.dart';
 
 class SectionCard extends StatelessWidget {
   final String id;
@@ -19,7 +20,7 @@ class SectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return this._withCustomTheme(context, Card(
+    return withCustomTheme(context, Card(
       child: InkWell(
         child: Container(
           child: Column(
@@ -87,19 +88,6 @@ class SectionCard extends StatelessWidget {
   String _getCountLabel(int count) {
     String afterCountLabel = count <= 1 ? 'piece' : 'pieces';
     return '$count $afterCountLabel';
-  }
-
-  Widget _withCustomTheme(BuildContext context, Widget widget) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-        textTheme: TextTheme(
-          body1: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-      ),
-      child: widget,
-    );  
   }
 
   Decoration _getDecoration(BuildContext context, {String imageUrl}) {

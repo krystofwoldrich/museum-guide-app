@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:museum_guide_app/screens/ExhibitionDetail.dart';
+import 'package:museum_guide_app/widgets/cards/localCardDecoration.dart';
+import 'package:museum_guide_app/widgets/cards/localCardTheme.dart';
 
 class ExhibitionCard extends StatelessWidget {
   final String id;
@@ -37,7 +39,7 @@ class ExhibitionCard extends StatelessWidget {
       ));
     }
 
-    return this._withCustomTheme(context, Container(
+    return withCustomTheme(context, Container(
       child: Card(
         child: InkWell(
           child: Container(
@@ -53,7 +55,11 @@ class ExhibitionCard extends StatelessWidget {
               right: 24,
               bottom: 30,
             ),
-            decoration: this._getDecoration(context, imageUrl: this.coverPictureUrl),
+            decoration: getDecoration(
+              context, 
+              fallbackAssetImageUrl: 'images/exhibition-card-missing-cover.jpg', 
+              imageUrl: this.coverPictureUrl
+            ),
           ),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
@@ -63,34 +69,5 @@ class ExhibitionCard extends StatelessWidget {
         ),
       ),
     ));
-  }
-
-  Widget _withCustomTheme(BuildContext context, Widget widget) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-        textTheme: TextTheme(
-          body1: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-      ),
-      child: widget,
-    );  
-  }
-
-  Decoration _getDecoration(BuildContext context, {String imageUrl}) {
-    ImageProvider<dynamic> backgroundImage = AssetImage('images/exhibition-card-missing-cover.jpg');
-    if (imageUrl != null) {
-      backgroundImage = NetworkImage(imageUrl);
-    }
-
-    return BoxDecoration(
-      image: DecorationImage(
-        image: backgroundImage,
-        fit: BoxFit.cover,
-        colorFilter: ColorFilter.mode(Color.fromRGBO(66, 66, 66, 0.68), BlendMode.srcOver),
-      ),
-      color: Theme.of(context).textTheme.body1.color,
-    );
   }
 }
