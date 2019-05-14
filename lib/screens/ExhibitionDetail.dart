@@ -74,12 +74,12 @@ class ExhibitionDetail extends StatelessWidget {
           return SectionCard(
             id: section.id,
             title: section.name,
-            description: "",
+            description: section.description,
+            coverPictureUrl: section.coverPictureUrl,
             piecesCount: 0,
             // onTap: () {},
           );
         }).toList(),
-        isRow: true,
         onMore: () {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) => SectionList(exhibitionId: exhibition.id),
