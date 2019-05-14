@@ -3,7 +3,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:museum_guide_app/AppState.dart';
 import 'package:museum_guide_app/model/Step.dart' as StepModel;
-import 'package:museum_guide_app/widgets/Section.dart';
+import 'package:museum_guide_app/widgets/AudioPlayer.dart';
 
 class StepDetail extends StatefulWidget {
   final String tourName;
@@ -83,28 +83,61 @@ class StepDetailState extends State<StepDetail> with WidgetsBindingObserver {
         return step;
       },
       builder: (BuildContext context, StepModel.Step step) {
-        return Scaffold(
-          body: this._getContent(context, step),
+        return Stack(
+          children: <Widget>[
+            this._getBackground(context, step),
+            Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+              ),
+              body: this._getContent(context, step),
+              backgroundColor: Colors.transparent,
+            ),
+          ],
         );
       },
     );
   }
 
+  Widget _getBackground(BuildContext context, StepModel.Step step) {
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage(step.coverPictureUrl),
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(Color.fromRGBO(66, 66, 66, 0.68), BlendMode.srcOver),
+        ),
+      ),
+    );
+  }
+
   Widget _getContent(BuildContext context, StepModel.Step step) {
-    final List<Widget> content = [];
-
-    content.add(Image.network(step.coverPictureUrl));
-    content.add(Section(
-      title: 'Description',
-      content: <Widget>[
-        Text(step.description != null
-            ? step.description
-            : 'No description available.'),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          alignment: Alignment.center,
+          child: Column(
+            children: <Widget>[
+              Container(
+                child: Text(
+                  step.title,
+                  style: TextStyle(fontSize: 38, fontWeight: FontWeight.bold, color: Theme.of(context).canvasColor),
+                ),
+                margin: EdgeInsets.only(bottom: 16),
+              ),
+              Text(
+                step.description,
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400, color: Theme.of(context).canvasColor),
+              ),
+            ],
+          )
+        ),
+        AudioPlayer(
+          audioUrl: step.multimedias[0].fileUrl,
+        ),
       ],
-    ));
-
-    return ListView(
-      children: content,
     );
   }
 }
