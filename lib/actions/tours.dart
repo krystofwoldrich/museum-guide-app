@@ -109,7 +109,7 @@ ThunkAction<AppState> getTourDetail(String tourId) {
                         index: step['index'],
                         title: step['title'],
                         description: step['description'],
-                        coverPictureUrl: step['coverPicture']['url'],
+                        coverPictureUrl: step['coverPicture'] != null ? step['coverPicture']['url'] : null,
                         multimedias: List<Multimedia>.from((step['orderedMediaResources'])
                           .map((resource) {
                             return Multimedia(
