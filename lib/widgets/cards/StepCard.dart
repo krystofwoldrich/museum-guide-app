@@ -32,23 +32,37 @@ class StepCard extends StatelessWidget {
           bottom: 8,
         ),
       ),
-      Text(
-        this.description != null ? this.description : 'No description',
-        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400)
+      Container(
+        child: Text(
+          this.description != null ? this.description : 'No description',
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400)
+        ),
+        margin: EdgeInsets.only(
+          top: 8,
+          bottom: 8,
+        ),
       )
     ];
 
     print(this.multimedias);
     if (this.multimedias != null && this.multimedias.length >= 1 && this.multimedias[0].type == 'audio') {
-      content.add(Icon(
-        Icons.play_arrow,
-        size: 54,
-        color: Theme.of(context).primaryColor,
+      content.add(Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.only(
+          top: 8,
+        ),
+        child: Icon(
+          Icons.play_arrow,
+          size: 54,
+          color: Theme.of(context).primaryColor,
+        ),
       ));
     } else {
       content.add(Container(
+        margin: EdgeInsets.only(
+          top: 8,
+        ),
         height: 54,
-        margin: EdgeInsets.all(8),
       ));
     }
 
@@ -65,7 +79,7 @@ class StepCard extends StatelessWidget {
               left: 16,
               top: 16,
               right: 24,
-              bottom: 30,
+              bottom: 16,
             ),
             decoration: getDecoration(
               context,
