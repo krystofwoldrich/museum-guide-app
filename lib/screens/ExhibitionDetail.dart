@@ -51,20 +51,15 @@ class ExhibitionDetail extends StatelessWidget {
 
     content.add(Section(
       title: 'Open',
-      content: <Widget>[
-        Text(
-          DateFormat('MMM d, yyyy', 'en_US').format(exhibition.from) +
-          '-' +
-          DateFormat('MMM d, yyyy', 'en_US').format(exhibition.to)
-        ),
-      ],
+      description: 
+        DateFormat('MMM d, yyyy', 'en_US').format(exhibition.from) +
+        '-' +
+        DateFormat('MMM d, yyyy', 'en_US').format(exhibition.to),
     ));
 
     content.add(Section(
       title: 'Description',
-      content: <Widget>[
-        Text(exhibition.description != null ? exhibition.description : 'No description available.'),
-      ],
+      description: exhibition.description,
     ));
 
     if (exhibition.sections != null) {

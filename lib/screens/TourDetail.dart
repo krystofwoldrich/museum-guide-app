@@ -49,11 +49,7 @@ class TourDetail extends StatelessWidget {
 
     content.add(Section(
       title: 'Description',
-      content: <Widget>[
-        Text(tour.description != null
-            ? tour.description
-            : 'No description available.'),
-      ],
+      description: tour.description,
     ));
 
     if (tour.steps != null) {
