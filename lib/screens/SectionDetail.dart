@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:museum_guide_app/AppState.dart';
 import 'package:museum_guide_app/actions/sections.dart';
 import 'package:museum_guide_app/model/Section.dart' as Model;
+import 'package:museum_guide_app/screens/ArtworkDetail.dart';
 import 'package:museum_guide_app/widgets/LoadingWidget.dart';
 import 'package:museum_guide_app/widgets/Section.dart';
 import 'package:museum_guide_app/widgets/cards/ArtworkCard.dart';
@@ -54,11 +55,11 @@ class SectionDetail extends StatelessWidget {
         title: artwork.title,
         coverPictureUrl: artwork.coverPictureUrl,
         onTap: () {
-          // if (artwork.coverPictureUrl == null) return;
+          if (artwork.coverPictureUrl == null) return;
 
-          // Navigator.of(context).push(MaterialPageRoute(
-          //   builder: (BuildContext context) => SectionDetail(sectionId: section.id,),
-          // )); 
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => ArtworkDetail(title: artwork.title, imageUrl: artwork.coverPictureUrl,),
+          )); 
         },
       )).toList(),
     ));

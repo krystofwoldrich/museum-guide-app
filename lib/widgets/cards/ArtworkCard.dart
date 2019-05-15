@@ -32,6 +32,7 @@ class ArtworkCard extends StatelessWidget {
                 margin: EdgeInsets.only(
                   bottom: 8,
                 ),
+                height: 284,
               ),
             ],
           ),
