@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:museum_guide_app/widgets/cards/localCardTheme.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class SectionCard extends StatelessWidget {
   final String id;
@@ -38,9 +39,11 @@ class SectionCard extends StatelessWidget {
                 ),
               ),
               Container(
-                child: Text(
+                child: AutoSizeText(
                   this.description,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400)
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 margin: EdgeInsets.only(
                   bottom: 8,
