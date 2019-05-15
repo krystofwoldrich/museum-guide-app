@@ -65,6 +65,7 @@ class Dashboard extends StatelessWidget {
             id: exhibition.id,
             title: exhibition.title,
             description: exhibition.description,
+            coverPictureUrl: exhibition.coverPictureUrl,
           ))
           .toList(),
         onMore: () {

@@ -29,7 +29,7 @@ ThunkAction<AppState> getSectionByExhibition(int exhibitionId) {
     try {
       Response response = await post(
           api,
-          body: { 'query': '{sections(where: {exhibition: {id: $exhibitionId}}){id, name, description}}' }
+          body: { 'query': '{sections(where: {exhibition: {id: $exhibitionId}}){id, name, description, coverPicture{sourceFile{url}}}}' }
       );
 
       List sections = json.decode(response.body)['data']['sections'];
@@ -39,6 +39,7 @@ ThunkAction<AppState> getSectionByExhibition(int exhibitionId) {
             id: section['id'],
             name: section['name'],
             description: section['description'],
+            coverPictureUrl: section['coverPicture'] == null ? null : section['coverPicture']['sourceFile']['url'],
           )).toList()
       ));
     } catch (e) {
@@ -56,7 +57,7 @@ ThunkAction<AppState> getSections = (Store<AppState> store) async {
   try {
     Response response = await post(
       api,
-      body: { 'query': '{sections{id, name, description}}' }
+      body: { 'query': '{sections{id, name, description, coverPicture{sourceFile{url}}}}' }
     );
 
     List sections = json.decode(response.body)['data']['sections'];
@@ -66,6 +67,7 @@ ThunkAction<AppState> getSections = (Store<AppState> store) async {
         id: section['id'],
         name: section['name'],
         description: section['description'],
+        coverPictureUrl: section['coverPicture'] == null ? null : section['coverPicture']['sourceFile']['url'],
       )).toList()
     ));
   } catch (e) {

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:museum_guide_app/screens/ExhibitionDetail.dart';
+import 'package:museum_guide_app/widgets/cards/localCardDecoration.dart';
+import 'package:museum_guide_app/widgets/cards/localCardTheme.dart';
 
 class ExhibitionCard extends StatelessWidget {
   final String id;
   final String title;
   final String description;
+  final String coverPictureUrl;
   final DateTime from;
   final DateTime to;
 
@@ -12,6 +15,7 @@ class ExhibitionCard extends StatelessWidget {
     @required this.id,
     @required this.title,
     @required this.description,
+    this.coverPictureUrl,
     this.from,
     this.to
   });
@@ -35,7 +39,7 @@ class ExhibitionCard extends StatelessWidget {
       ));
     }
 
-    return this._withCustomTheme(context, Container(
+    return withCustomTheme(context, Container(
       child: Card(
         child: InkWell(
           child: Container(
@@ -51,12 +55,10 @@ class ExhibitionCard extends StatelessWidget {
               right: 24,
               bottom: 30,
             ),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage('https://whitney.org/uploads/image/file/822181/Skull_red.jpg'),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(Color.fromRGBO(66, 66, 66, 0.68), BlendMode.srcOver),
-              ),
+            decoration: getDecoration(
+              context, 
+              fallbackAssetImageUrl: 'images/exhibition-card-missing-cover.jpg', 
+              imageUrl: this.coverPictureUrl
             ),
           ),
           onTap: () {
@@ -67,18 +69,5 @@ class ExhibitionCard extends StatelessWidget {
         ),
       ),
     ));
-  }
-
-  Widget _withCustomTheme(BuildContext context, Widget widget) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-        textTheme: TextTheme(
-          body1: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-      ),
-      child: widget,
-    );  
   }
 }

@@ -6,6 +6,7 @@ class Tour {
   final String id;
   final String name;
   final String description;
+  final String coverPictureUrl;
   final List<Step> steps;
   final double lengthInHours;
 
@@ -13,6 +14,7 @@ class Tour {
     this.id,
     this.name,
     this.description,
+    this.coverPictureUrl,
     this.steps,
     this.lengthInHours,
   });

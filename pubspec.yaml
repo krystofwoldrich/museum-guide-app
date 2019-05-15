@@ -49,6 +49,12 @@ flutter:
    # License https://unsplash.com/photos/FFBkz2lOTkE FREE COMMERCIAL USE
    - images/exhibitions-list-cover.jpg
 
+   # License https://unsplash.com/photos/kJFzlWhFlnE FREE COMMERCIAL USE
+   - images/exhibition-card-missing-cover.jpg
+
+   # License https://unsplash.com/photos/oLhTLD-RBsc FREE COMMERCIAL USE
+   - images/section-card-missing-cover.jpg
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 

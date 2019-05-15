@@ -46,6 +46,7 @@ class ExhibitionList extends StatelessWidget {
                     id: exhibition.id,
                     title: exhibition.title,
                     description: exhibition.description,
+                    coverPictureUrl: exhibition.coverPictureUrl,
                     from: exhibition.from,
                     to: exhibition.to))
                 .toList(),
