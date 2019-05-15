@@ -35,6 +35,7 @@ class ExhibitionCard extends StatelessWidget {
         child: AutoSizeText(
           this.description,
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+          minFontSize: 14,
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
         ),

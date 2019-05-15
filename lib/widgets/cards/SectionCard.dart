@@ -42,6 +42,7 @@ class SectionCard extends StatelessWidget {
                 child: AutoSizeText(
                   this.description,
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                  minFontSize: 14,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
