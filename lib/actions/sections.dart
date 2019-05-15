@@ -49,7 +49,7 @@ ThunkAction<AppState> getSectionById(String id) {
         artworks: List<Artwork>.from(section['artworks'].map((artwork) => Artwork(
           id: artwork['id'],
           title: artwork['title'],
-          coverPictureUrl: artwork['mediaResources'][0]['sourceFile']['url'],
+          coverPictureUrl: artwork['mediaResources'] == null || (artwork['mediaResources'] as List).length < 1 ? null : artwork['mediaResources'][0]['sourceFile']['url'],
         ))),
       )));
     } catch (e) {

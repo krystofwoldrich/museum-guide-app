@@ -41,20 +41,24 @@ ThunkAction<AppState> getArtworkBySection(String sectionId) {
           body: { 'query': '{artworks(where: {section: {id: $sectionId}}){id, title, description, made, mediaResources{id, sourceFile{url}}}}' }
       );
 
-      List artworks = json.decode(response.body)['data']['artworks'];
+      List artworks = await json.decode(response.body)['data']['artworks'];
+
 
       store.dispatch(FetchArtworksBySectionResponseSuccess(
-          artworks.map((artwork) => Artwork(
-            id: artwork['id'],
-            title: artwork['title'],
-            description: artwork['description'],
-            made: DateTime.parse(artwork['made']),
-            coverPictureUrl: artwork['mediaResources'][0]['sourceFile']['url'],
-          )).toList(),
+          List<Artwork>.from(artworks.map((artwork) {
+            return Artwork(
+              id: artwork['id'],
+              title: artwork['title'],
+              description: artwork['description'],
+              made: DateTime.parse(artwork['made']),
+              coverPictureUrl: artwork['mediaResources'] == null || (artwork['mediaResources'] as List).length < 1 ? null : artwork['mediaResources'][0]['sourceFile']['url'],
+            );
+          })),
           sectionId
       ));
     } catch (e) {
       //TODO: sentry error log
+      print(e);
       store.dispatch(FetchArtworksResponseError());
     }
   };
