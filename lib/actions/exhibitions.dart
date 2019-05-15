@@ -147,7 +147,7 @@ ThunkAction<AppState> getExhibitionDetail(String exhibitionId) {
               id: section['id'],
               name: section['name'],
               description: section['description'],
-              coverPictureUrl: exhibition['coverPicture'] == null ? null : exhibition['coverPicture']['sourceFile']['url'],
+              coverPictureUrl: section['coverPicture'] == null ? null : section['coverPicture']['sourceFile']['url'],
           )).toList()),
           tours: List<Tour>.from((exhibition['tours']).map((tour) => Tour(
               id: tour['id'],

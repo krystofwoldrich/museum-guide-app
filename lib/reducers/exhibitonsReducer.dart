@@ -1,5 +1,9 @@
+import 'package:museum_guide_app/model/Section.dart';
+
 import '../model/Exhibition.dart';
 import '../actions/exhibitions.dart' as Actions;
+import '../actions/artworks.dart' as ArtworkAction;
+
 
 List<Exhibition> exhibitionsReducer(
     List<Exhibition> prevState, dynamic action) {
@@ -21,6 +25,20 @@ Exhibition exhibitionDetailReducer(Exhibition prevState, dynamic action) {
     return action.exhibition;
   } else if (action is Actions.FetchExhibitionDetailResponseError) {
     return prevState;
+  } if (action is ArtworkAction.FetchArtworksBySectionResponseSuccess) {  
+    final Map<String, Section> updatedSections = List<Section>
+      .from(prevState.sections)
+      .asMap()
+      .map((_, Section section) => MapEntry(section.id, section));
+
+    updatedSections[action.sectionId] = updatedSections[action.sectionId].copyWith(
+      artworks: action.artworks,
+    );
+
+
+    return prevState.copyWith(
+      sections: updatedSections.values.toList(),
+    );
   } else {
     return prevState;
   }

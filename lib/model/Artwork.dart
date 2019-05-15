@@ -8,11 +8,14 @@ class Artwork {
   final String description;
   final DateTime made;
   final Author author;
+  final String coverPictureUrl;
 
   Artwork({
     this.id,
     this.title,
     this.description,
     this.made,
-    this.author});
+    this.author,
+    this.coverPictureUrl,
+    });
 }
