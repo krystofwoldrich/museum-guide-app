@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:museum_guide_app/screens/TourDetail.dart';
 import 'package:museum_guide_app/widgets/cards/localCardDecoration.dart';
 import 'package:museum_guide_app/widgets/cards/localCardTheme.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class TourCard extends StatelessWidget {
   static const double maxLengthInHours = 6; //hours
@@ -36,9 +37,12 @@ class TourCard extends StatelessWidget {
     ];
 
     content.add(Container(
-      child: Text(
+      child: AutoSizeText(
         this.description != null ? this.description : 'No description',
-        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400)
+        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+        minFontSize: 14,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
       ),
       margin: EdgeInsets.only(
         bottom: 16,
