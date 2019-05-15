@@ -59,30 +59,21 @@ class TourDetail extends StatelessWidget {
     if (tour.steps != null) {
       content.add(Section(
           title: 'Steps',
-          content: tour.steps.map((StepModel.Step step) {
-            return StepCard(
+          content: tour.steps.asMap().map((int stepIndex, StepModel.Step step) {
+            return MapEntry(stepIndex, StepCard(
               id: step.id,
               title: step.title,
               description: step.description,
               coverPictureUrl: step.coverPictureUrl,
               multimedias: step.multimedias,
-            );
-          }).toList(),
+              onTap: () {
+                this._openTour(context, tour, initPageIndex: stepIndex);
+              },
+            ));
+          }).values.toList(),
           onMoreTitle: "Start tour",
           onMore: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => PageView.builder(
-                      controller: new PageController(),
-                      itemBuilder: (BuildContext context, int index) {
-                        print("Index: " + index.toString());
-                        return StepDetail(
-                            tourName: tour.name,
-                            step: tour.steps.firstWhere((step) => step.index == index),
-                          stepCount: tour.steps.length
-                        );
-                      },
-                      itemCount: tour.steps.length,
-                    )));
+            this._openTour(context, tour);
           }));
     }
 
@@ -90,4 +81,20 @@ class TourDetail extends StatelessWidget {
       children: content,
     );
   }
+
+  void _openTour(BuildContext context, Tour tour, {int initPageIndex = 0}) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (BuildContext context) => PageView.builder(
+        controller: new PageController(initialPage: initPageIndex),
+        itemBuilder: (BuildContext context, int index) {
+          return StepDetail(
+            tourName: tour.name,
+            step: tour.steps.firstWhere((step) => step.index == index),
+            stepCount: tour.steps.length
+          );
+        },
+        itemCount: tour.steps.length,
+      )
+    ));
+  } 
 }
