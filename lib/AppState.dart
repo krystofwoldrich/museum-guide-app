@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:museum_guide_app/model/SearchResult.dart';
+import 'package:museum_guide_app/model/Section.dart';
 import './model/Tour.dart';
 import './model/Ticket.dart';
 import './model/Exhibition.dart';
@@ -10,6 +11,7 @@ class AppState {
   final List<Ticket> tickets;
   final List<Exhibition> exhibitions;
   final Exhibition exhibitionDetail;
+  final Section sectionDetail;
   final List<Tour> tours;
   final SearchState search;
 
@@ -18,6 +20,7 @@ class AppState {
     @required List<Ticket> tickets,
     @required List<Exhibition> exhibitions,
     @required this.exhibitionDetail,
+    @required this.sectionDetail,
     @required List<Tour> tours,
     @required this.search,
   }) :
@@ -31,6 +34,7 @@ final initialState = new AppState(
   tickets: [],
   exhibitions: [],
   exhibitionDetail: null,
+  sectionDetail: null,
   tours: [],
   search: SearchState(
     loading: false,

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
 import 'package:museum_guide_app/AppState.dart';
+import 'package:museum_guide_app/actions/artworks.dart';
 import 'package:museum_guide_app/actions/exhibitions.dart';
 import 'package:museum_guide_app/model/Exhibition.dart';
 import 'package:museum_guide_app/model/Section.dart' as SectionModel;
 import 'package:museum_guide_app/model/Tour.dart';
+import 'package:museum_guide_app/screens/SectionDetail.dart';
 import 'package:museum_guide_app/screens/SectionList.dart';
 import 'package:museum_guide_app/screens/TourDetail.dart';
 import 'package:museum_guide_app/screens/ToursList.dart';
@@ -66,13 +68,21 @@ class ExhibitionDetail extends StatelessWidget {
       content.add(Section(
         title: 'Artworks',
         content: exhibition.sections.map((SectionModel.Section section) {
+          if (section.artworks.length == 0) {
+            StoreProvider.of<AppState>(context).dispatch(getArtworkBySection(section.id));
+          }
+
           return SectionCard(
             id: section.id,
             title: section.name,
             description: section.description,
             coverPictureUrl: section.coverPictureUrl,
-            piecesCount: 0,
-            // onTap: () {},
+            piecesCount: section.artworks.length,
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => SectionDetail(sectionId: section.id,),
+              )); 
+            },
           );
         }).toList(),
         onMore: () {

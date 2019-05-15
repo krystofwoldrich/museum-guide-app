@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:museum_guide_app/widgets/cards/localCardTheme.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
-class SectionCard extends StatelessWidget {
+class ArtworkCard extends StatelessWidget {
   final String id;
   final String title;
-  final String description;
   final String coverPictureUrl;
-  final int piecesCount;
   final void Function() onTap;
 
-  SectionCard({
+  ArtworkCard({
     @required this.id,
     @required this.title,
-    @required this.description,
-    @required this.piecesCount,
     this.coverPictureUrl,
     void Function() onTap,
   }) : this.onTap = onTap != null ? onTap : (() {}) ;
@@ -37,41 +32,7 @@ class SectionCard extends StatelessWidget {
                 margin: EdgeInsets.only(
                   bottom: 8,
                 ),
-              ),
-              Container(
-                child: AutoSizeText(
-                  this.description,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                margin: EdgeInsets.only(
-                  bottom: 8,
-                ),
-              ),
-              Container(
-                child: Align(
-                  child: Container(
-                    child: Text(
-                      this._getCountLabel(this.piecesCount),
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                    ),
-                    padding: EdgeInsets.only(
-                      left: 16,
-                      top: 8,
-                      right: 16,
-                      bottom: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Theme.of(context).canvasColor, width: 2),
-                      borderRadius: BorderRadius.all(Radius.circular(22)),
-                    ),
-                  ),
-                  alignment: Alignment.center,
-                ),
-                margin: EdgeInsets.only(
-                  top: 8,
-                ),
+                height: 284,
               ),
             ],
           ),
@@ -86,12 +47,6 @@ class SectionCard extends StatelessWidget {
         onTap: this.onTap,
       ),
     ));
-  }
-
-  String _getCountLabel(int count) {
-    String afterCountLabel = count <= 1 ? 'piece' : 'pieces';
-    String countText = count <= 0 ? '.' : count.toString(); 
-    return '$countText $afterCountLabel';
   }
 
   Decoration _getDecoration(BuildContext context, {String imageUrl}) {

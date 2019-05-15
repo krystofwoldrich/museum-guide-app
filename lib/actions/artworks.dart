@@ -19,9 +19,18 @@ class FetchArtworksResponseSuccess {
 }
 
 @immutable
+class FetchArtworksBySectionResponseSuccess {
+  final String sectionId;
+  final List<Artwork> artworks;
+
+  FetchArtworksBySectionResponseSuccess(List<Artwork> artworks, this.sectionId)
+    : this.artworks = List.unmodifiable(artworks);
+}
+
+@immutable
 class FetchArtworksResponseError { }
 
-ThunkAction<AppState> getArtworkBySection(int sectionId) {
+ThunkAction<AppState> getArtworkBySection(String sectionId) {
   return (Store<AppState> store) async {
     store.dispatch(FetchArtworksRequest());
     final api = await loadApiHostUrl();
@@ -29,18 +38,20 @@ ThunkAction<AppState> getArtworkBySection(int sectionId) {
     try {
       Response response = await post(
           api,
-          body: { 'query': '{artworks(where: {section: {id: $sectionId}}){id, title, description, made}}' }
+          body: { 'query': '{artworks(where: {section: {id: $sectionId}}){id, title, description, made, mediaResources{id, sourceFile{url}}}}' }
       );
 
       List artworks = json.decode(response.body)['data']['artworks'];
 
-      store.dispatch(FetchArtworksResponseSuccess(
+      store.dispatch(FetchArtworksBySectionResponseSuccess(
           artworks.map((artwork) => Artwork(
             id: artwork['id'],
             title: artwork['title'],
             description: artwork['description'],
             made: DateTime.parse(artwork['made']),
-          )).toList()
+            coverPictureUrl: artwork['mediaResources'][0]['sourceFile']['url'],
+          )).toList(),
+          sectionId
       ));
     } catch (e) {
       //TODO: sentry error log

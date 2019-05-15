@@ -28,7 +28,8 @@ class SectionList extends StatelessWidget {
             id: section.id,
             title: section.name,
             description: section.description,
-            piecesCount: sections.length,
+            piecesCount: section.artworks.length,
+            coverPictureUrl: section.coverPictureUrl,
            /* onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) => SectionDetail(
