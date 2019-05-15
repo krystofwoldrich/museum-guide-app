@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:museum_guide_app/screens/ExhibitionDetail.dart';
 import 'package:museum_guide_app/widgets/cards/localCardDecoration.dart';
 import 'package:museum_guide_app/widgets/cards/localCardTheme.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class ExhibitionCard extends StatelessWidget {
   final String id;
@@ -31,9 +32,11 @@ class ExhibitionCard extends StatelessWidget {
 
     if (this.description != null) {
       content.add(Container(
-        child: Text(
+        child: AutoSizeText(
           this.description,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400)
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
         ),
         margin: EdgeInsets.only(top: 16),
       ));
