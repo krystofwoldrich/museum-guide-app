@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:museum_guide_app/AppState.dart';
 import 'package:museum_guide_app/helpers/apiHostUrlLoader.dart';
 import 'package:museum_guide_app/model/Location.dart';
+import 'package:museum_guide_app/model/Multimedia.dart';
 import 'package:museum_guide_app/model/Room.dart';
 import 'package:museum_guide_app/model/Step.dart';
 import 'package:redux/redux.dart';
@@ -92,7 +93,7 @@ ThunkAction<AppState> getTourDetail(String tourId) {
     try {
       Response response = await post(api, body: {
         'query':
-            '{tours(where: {id: $tourId}){id, name, description, steps{id,title, description, index, coverPicture{url}, location{id, name, room{id, name, number}}}}}'
+            '{tours(where: {id: $tourId}){id, name, description, steps{id,title, description, index, coverPicture{url}, location{id, name, room{id, name, number}}, orderedMediaResources {multimedia{id, name, sourceFile{url}, type}, sequenceNumber, id}}}}'
       });
 
       List tours = json.decode(response.body)['data']['tours'];
@@ -109,6 +110,15 @@ ThunkAction<AppState> getTourDetail(String tourId) {
                         title: step['title'],
                         description: step['description'],
                         coverPictureUrl: step['coverPicture']['url'],
+                        multimedias: List<Multimedia>.from((step['orderedMediaResources'])
+                          .map((resource) {
+                            return Multimedia(
+                              id: resource['multimedia']['id'],
+                              name: resource['multimedia']['name'],
+                              type: resource['multimedia']['type'],
+                              fileUrl: resource['multimedia']['sourceFile']['url'],
+                            );
+                          })),
                         location: Location(
                             id: step['location']['id'],
                             name: step['location']['name'],

@@ -21,6 +21,7 @@ dependencies:
     sdk: flutter
   barcode_scan: ^1.0.0
   flutter_local_notifications: ^0.7.0
+  audioplayers: 0.12.0
 
 dev_dependencies:
   flutter_test:
@@ -30,7 +31,6 @@ dev_dependencies:
   redux_thunk: ^0.2.1
   http: ^0.12.0+2
   intl: 0.15.8
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

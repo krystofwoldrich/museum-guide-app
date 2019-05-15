@@ -29,7 +29,8 @@ final ThemeData customThemeData =
     ),
     textTheme: TextTheme(
       body1: TextStyle(
-        color: _colorDarkGrey
+        color: _colorDarkGrey,
+        fontWeight: FontWeight.w600,
       ),
     ),
     buttonTheme: ButtonThemeData(
