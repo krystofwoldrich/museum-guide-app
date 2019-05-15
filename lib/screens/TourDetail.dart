@@ -63,7 +63,9 @@ class TourDetail extends StatelessWidget {
             return StepCard(
               id: step.id,
               title: step.title,
-              description: "",
+              description: step.description,
+              coverPictureUrl: step.coverPictureUrl,
+              multimedias: step.multimedias,
             );
           }).toList(),
           onMoreTitle: "Start tour",
