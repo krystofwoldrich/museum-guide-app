@@ -73,6 +73,7 @@ class Dashboard extends StatelessWidget {
             builder: (BuildContext context) => ExhibitionTabs(),
           ));
         },
+        onMoreTitle: 'See all',
       ),
     );
   }
