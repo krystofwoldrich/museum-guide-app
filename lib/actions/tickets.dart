@@ -37,11 +37,12 @@ ThunkAction<AppState> getTickets = (Store<AppState> store) async {
       tickets.map((ticket) => Ticket(
         id: ticket['id'],
         name: ticket['name'],
-        price: ticket['price'],
+        price: double.parse(ticket['price'].toString()),
       )).toList()
     ));
   } catch (e) {
     //TODO: sentry error log
+    print(e);
     store.dispatch(FetchTicketsResponseError());
   }
 };
